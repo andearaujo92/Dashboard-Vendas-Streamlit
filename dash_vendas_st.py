@@ -9,7 +9,7 @@ st.set_page_config('Dashboard Vendas', layout='wide')
 
 # Carregando os dados e Transformando
 
-dados = pd.read_excel('df_vendas_dashboard.xlsx', nrows=1000)
+dados = pd.read_excel('df_vendas_dashboard.xlsx')
 dados['Faturamento'] = dados['Qtd Vendida'] * dados['Preço Unitario']
 dados['Custo Total'] = dados['Qtd Vendida'] * dados['Custo Unitario']
 dados['Ano'] = dados['Data da Venda'].dt.year
