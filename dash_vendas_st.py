@@ -9,7 +9,7 @@ st.set_page_config('Dashboard Vendas', layout='wide')
 
 # Carregando os dados e Transformando
 
-dados = pd.read_excel('df_vendas_dashboard.xlsx', nrows=1000)
+dados = pd.read_excel('df_vendas_dashboard.xlsx')
 dados['Faturamento'] = dados['Qtd Vendida'] * dados['Preço Unitario']
 dados['Custo Total'] = dados['Qtd Vendida'] * dados['Custo Unitario']
 dados['Ano'] = dados['Data da Venda'].dt.year
@@ -66,18 +66,18 @@ style_metric_cards()
 
 # Distribuindo os gráficos
 with col1:
-    vendas_por_loja = dados_filtrados.groupby(['Nome da Loja']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento')
-    fig_vendas_por_loja = px.bar(data_frame=vendas_por_loja, x = 'Faturamento', y = 'Nome da Loja', title='Faturamento por Loja')
+    vendas_por_loja = dados_filtrados.groupby(['Nome da Loja']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento').iloc[0:5,:]
+    fig_vendas_por_loja = px.bar(data_frame=vendas_por_loja, x = 'Faturamento', y = 'Nome da Loja', title='Top 5 Faturamento por Loja')
     st.plotly_chart(fig_vendas_por_loja, use_container_width=True)
     
 with col2:
-    vendas_por_produto = dados_filtrados.groupby(['Produto']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento')
-    fig_vendas_por_produto = px.bar(data_frame=vendas_por_produto, x = 'Faturamento', y = 'Produto', title='Faturamento por Produto' )
+    vendas_por_produto = dados_filtrados.groupby(['Produto']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento').iloc[0:5,:]
+    fig_vendas_por_produto = px.bar(data_frame=vendas_por_produto, x = 'Faturamento', y = 'Produto', title='Top 5 Faturamento por Produto' )
     st.plotly_chart(fig_vendas_por_produto, use_container_width=True)
 
 with col3:
-    vendas_por_marca = dados_filtrados.groupby(['Marca']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento')
-    fig_vendas_por_marca = px.bar(data_frame=vendas_por_marca, x = 'Faturamento', y = 'Marca', title='Faturamento por Marca')
+    vendas_por_marca = dados_filtrados.groupby(['Marca']).sum('Faturamento').reset_index().sort_values(by = 'Faturamento').iloc[0:5,:]
+    fig_vendas_por_marca = px.bar(data_frame=vendas_por_marca, x = 'Faturamento', y = 'Marca', title='Top 5 Faturamento por Marca')
     st.plotly_chart(fig_vendas_por_marca, use_container_width=True)
 
 vendas_por_mes = dados_filtrados.groupby(['Data da Venda']).sum('Faturamento').reset_index()
